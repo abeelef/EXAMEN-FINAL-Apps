@@ -173,7 +173,7 @@ if __name__ == "__main__":
     
     db_session.close()
 
-            # -------------------- CREATE TASK EXAMEN --------------------
+            # -------------------- CREATE TASK EXAMEN -------------------------------
     
 	#No en creo 1000 perque l'ordinador va molt lent en crearho tot.
     for i in range(1,10):
@@ -182,7 +182,7 @@ if __name__ == "__main__":
         name="NOM NUMERO"+str(i),
         description="LA MISMA EN TODOS",
 	hours = i,
-	completed = i
+	completed = 2
         )
     db_session.add(task)
     

@@ -12,7 +12,7 @@ from urllib.parse import urljoin
 
 import falcon
 from passlib.hash import pbkdf2_sha256
-from sqlalchemy import Column, Date, DateTime, Enum, ForeignKey, Integer, Unicode, \
+from sqlalchemy import Column, Date, DateTime, Enum, ForeignKey, Integer, Float, Unicode, \
     UnicodeText, Table, type_coerce, case
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
@@ -262,7 +262,7 @@ class Task(SQLAlchemyBase, JSONModel):
     name = Column(Unicode(100), unique=True)
     description = Column(Unicode(200))
     hours = Column(Integer)
-    completed = Column(Integer)
+    completed = Column(Float)
    
      
     @hybrid_property
