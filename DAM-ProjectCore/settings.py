@@ -13,7 +13,7 @@ else:
     DB_HOST = "127.0.0.1"
 
 
-DB_PORT = "3307"
+DB_PORT = "3306"
 DB_NAME = "dev-test"
 DB_USERNAME = "dev-user"
 DB_PASSWORD = "1234"

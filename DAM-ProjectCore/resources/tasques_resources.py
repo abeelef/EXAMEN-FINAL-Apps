@@ -9,6 +9,98 @@ import messages
 from db.json_model import JSONModel
 import settings 
 
+
+
+
+
+
+##                                            -------------------------------------EXAMEN-------------------------------------
+'''@falcon.before(requires_auth)
+class ResourceCreateTask(DAMCoreResource):
+    def on_post(self,req,resp,*args,**kwargs):
+        super(ResourceCreateTask, self).on_post(req,resp,*args,**kwargs)
+        
+        task = Task()
+        
+        
+        #Request Body --> {tittle:value1, description:value2} raw-json
+        
+        try:
+            task.name = req.get_param("name") #NOM DE LA CLAU QUE VA AL BODY DEL POSTMAN, si fessim req.get_param("KEY") podriem fer postman amb Params
+            task.description = req.get_param("description")	    
+	    task.hours = req.get_param("hours")
+	    task.completed = req.get_param("completed")
+            self.db_session.add(task)
+            try:
+                self.db_session.commit()
+            except IntegrityError:
+                raise falcon.HTTPBadRequest("LA TASCA EXISTEIX JA")
+                
+        except KeyError:
+            raise falcon.HTTPBadRequest("PER PODER FER UN LLIBRE NECESSITO MÍNIM QUE INTRODUDEIXIS NOM, HORES, DESCRIPCIO I COMPLETED")
+        
+        resp.status = falcon.HTTP_200
+'''
+
+
+
+
+@falcon.before(requires_auth)
+class ResourceCreateTask(DAMCoreResource):
+    def on_post(self,req,resp,*args,**kwargs):
+        super(ResourceCreateTask, self).on_post(req,resp,*args,**kwargs)
+        
+        task = Task()
+        #Request Body --> {tittle:value1, description:value2} raw-json
+        
+        try:
+	    
+            task.name = req.get_param("name") #NOM DE LA CLAU QUE VA AL BODY DEL POSTMAN, si fessim req.get_param("KEY") podriem fer postman amb Params
+            task.description = req.get_param("description")	    
+            task.hours = req.get_param("hours")
+            task.completed = req.get_param("completed")
+            self.db_session.add(task)
+            try:
+                self.db_session.commit()
+            except IntegrityError:
+                raise falcon.HTTPBadRequest("LA TASCA EXISTEIX JA")               
+        except KeyError:
+            raise falcon.HTTPBadRequest("PER PODER FER UN LLIBRE NECESSITO MÍNIM QUE INTRODUDEIXIS NOM, HORES, DESCRIPCIO I COMPLETED")
+        
+        resp.status = falcon.HTTP_200
+
+
+class ResourceGetTask(DAMCoreResource):
+    def on_get(self,req,resp,*args,**kwargs):
+        super(ResourceGetTask, self).on_get(req,resp,*args,**kwargs)
+        
+        tasks = list()
+        _query = self.db_session.query(Task) #BUSCA TOT EL QUE HI HAGI A LA BASE DE DADES A LA TAULA BOOK I POSAU A query
+               
+        '''#filter
+        genres = req.get_param("genres")'''
+        
+        '''if genres is not None:
+            _query = _query.filter(Book.genre == genres)       
+        results = _query.all()'''    
+
+        '''results = query.limit(3)#retornam nomes 3'''        
+
+        results = query.all()#retorna tot el que hi hagi a query    
+        for task in results:
+            tasks.append(task.json_model) #Si enlloc de custom escribissim 
+            
+        resp.media = tasks #enviem tot l'array de les tasques amb el model json definit a models
+
+##------------------------------------------------------------------------------EXAMEN FI (IGNORAR PART DE SOTA D'AIXO)-------------------------------------
+
+
+
+
+
+
+
+
 @falcon.before(requires_auth)
 class ResourceCreateTask(DAMCoreResource):
     def on_post(self,req,resp,*args,**kwargs):
@@ -173,83 +265,7 @@ class ResourceGetBookAdvance(DAMCoreResource):
             
         resp.media = books #enviem tot l'array
 
-##-----------------------EXAMEN------------------------------
-'''@falcon.before(requires_auth)
-class ResourceCreateTask(DAMCoreResource):
-    def on_post(self,req,resp,*args,**kwargs):
-        super(ResourceCreateTask, self).on_post(req,resp,*args,**kwargs)
-        
-        task = Task()
-        
-        
-        #Request Body --> {tittle:value1, description:value2} raw-json
-        
-        try:
-            task.name = req.get_param("name") #NOM DE LA CLAU QUE VA AL BODY DEL POSTMAN, si fessim req.get_param("KEY") podriem fer postman amb Params
-            task.description = req.get_param("description")	    
-	    task.hours = req.get_param("hours")
-	    task.completed = req.get_param("completed")
-            self.db_session.add(task)
-            try:
-                self.db_session.commit()
-            except IntegrityError:
-                raise falcon.HTTPBadRequest("LA TASCA EXISTEIX JA")
-                
-        except KeyError:
-            raise falcon.HTTPBadRequest("PER PODER FER UN LLIBRE NECESSITO MÍNIM QUE INTRODUDEIXIS NOM, HORES, DESCRIPCIO I COMPLETED")
-        
-        resp.status = falcon.HTTP_200
-'''
 
-
-
-
-@falcon.before(requires_auth)
-class ResourceCreateTask(DAMCoreResource):
-    def on_post(self,req,resp,*args,**kwargs):
-        super(ResourceCreateTask, self).on_post(req,resp,*args,**kwargs)
-        
-        task = Task()
-        #Request Body --> {tittle:value1, description:value2} raw-json
-        
-        try:
-            	task.name = req.get_param("name") #NOM DE LA CLAU QUE VA AL BODY DEL POSTMAN, si fessim req.get_param("KEY") podriem fer postman amb Params
-            	task.description = req.get_param("description")	    
-	    	task.hours = req.get_param("hours")
-	    	task.completed = req.get_param("completed")
-            	self.db_session.add(task)
-            	try:
-                	self.db_session.commit()
-            	except IntegrityError:
-                	raise falcon.HTTPBadRequest("LA TASCA EXISTEIX JA")               
-        except KeyError:
-            	raise falcon.HTTPBadRequest("PER PODER FER UN LLIBRE NECESSITO MÍNIM QUE INTRODUDEIXIS NOM, HORES, DESCRIPCIO I COMPLETED")
-        
-        resp.status = falcon.HTTP_200
-
-
-
-
-
-class ResourceGetTask(DAMCoreResource):
-    def on_get(self,req,resp,*args,**kwargs):
-        super(ResourceGetTask, self).on_get(req,resp,*args,**kwargs)
-        
-        tasks = list()
-        _query = self.db_session.query(Task) #BUSCA TOT EL QUE HI HAGI A LA BASE DE DADES A LA TAULA BOOK I POSAU A query
-               
-        '''#filter
-        genres = req.get_param("genres")'''
-        
-        '''if genres is not None:
-            _query = _query.filter(Book.genre == genres)       
-        results = _query.all()'''    
-        results = query.all()#retornam tot el que hi hagi a query
-        '''results = query.limit(3)#retornam nomes 3'''            
-        for task in results:
-            tasks.append(tasks.json_model) #Si enlloc de custom escribissim 
-            
-        resp.media = tasks #enviem tot l'array de les tasques amb el model json definit a models
 
 
 

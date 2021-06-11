@@ -58,7 +58,8 @@ application.add_route("/books", book_resources.ResourceGetBook()) #DELETE
 application.add_route("/books/advance", book_resources.ResourceGetBookAdvance()) #DELETE
 '''
 #EXAMEN
-application.add_route("/tasks/register", book_resources.ResourceCreateTask()) #POST
+application.add_route("/tasks/register", tasques_resources.ResourceCreateTask()) #POST
+application.add_route("/tasks/show", tasques_resources.ResourceGetTask()) #POST
 
 
 

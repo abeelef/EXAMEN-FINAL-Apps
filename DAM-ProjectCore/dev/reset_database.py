@@ -158,9 +158,6 @@ if __name__ == "__main__":
                 i = i+1
         db_session.commit()
 
-
-
-
    
     '''for i in range(1,10):
         book = Book(
@@ -176,16 +173,9 @@ if __name__ == "__main__":
             # -------------------- CREATE TASK EXAMEN -------------------------------
     
 	#No en creo 1000 perque l'ordinador va molt lent en crearho tot.
-    for i in range(1,10):
-    	task = Task(
-        id=i, 
-        name="NOM NUMERO"+str(i),
-        description="LA MISMA EN TODOS",
-	hours = i,
-	completed = 2
-        )
-    db_session.add(task)
-    
-db_session.commit()
+	for i in range(1,1000):
+		task = Task(id=i,name="NOM NUMERO"+str(i),description="LA MISMA EN TODOS"hours = i,completed = 2)
+		db_session.add(task)
+	db_session.commit()
     
 
