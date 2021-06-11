@@ -171,11 +171,17 @@ if __name__ == "__main__":
     db_session.close()
 
             # -------------------- CREATE TASK EXAMEN -------------------------------
-    
-	#No en creo 1000 perque l'ordinador va molt lent en crearho tot.
-	for i in range(1,1000):
-		task = Task(id=i,name="NOM NUMERO"+str(i),description="LA MISMA EN TODOS"hours = i,completed = 2)
-		db_session.add(task)
-	db_session.commit()
+    task1=Task(
+	id=1,name="nom",
+	description="MATEIXA EN TOTS",
+	hours=1,
+	completed=2
+	)    
+'''
+for i in range(1,1000):
+	task=Task(id=i,name="nom"+(i), description="LA MATEIXA EN TOTS",hours=i,completed=2)
+	db_session.add(task)
+    db_session.commit()'''
+	
     
 

@@ -3,7 +3,7 @@ from sqlalchemy.exc import IntegrityError
 
 from hooks import requires_auth
 from resources.base_resources import DAMCoreResource
-from db.models import  Book
+from db.models import  Book, Task
 
 import messages
 from db.json_model import JSONModel
